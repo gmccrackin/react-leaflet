@@ -5,28 +5,28 @@ var latlngListType = require("./types/latlngList");
 var eventsMixins = require("./mixins/events");
 
 module.exports = React.createClass({
-  displayName: "Polygon",
+  displayName: "Polyline",
 
-  mixins: [eventsMixins("polygon")],
+  mixins: [eventsMixins("polyline")],
 
   propTypes: {
     positions: latlngListType.isRequired
   },
 
-  getInitialState:function() {
-    return {polygon: Leaflet.polygon(this.props.positions, this.props)};
+  getInitialState() {
+    return {polyline: Leaflet.polyline(this.props.positions, this.props)};
   },
 
-  render:function() {
+  render() {
     if (this.props.map) {
-      this.state.polygon.addTo(props.map);
+      this.state.polyline.addTo(this.props.map);
     }
-    var children = React.Children.map(this.props.children, function(child)  {
+    var children = React.Children.map(this.props.children, child => {
       return React.addons.cloneWithProps(child, {
         map: this.props.map,
         layer: this.props.layer
       });
-    }.bind(this));
-    return React.createElement("noscript", null, children);
+    });
+    return <noscript>{children}</noscript>;
   }
 });

@@ -16,17 +16,17 @@ module.exports = React.createClass({
     bounds: latlngListType.isRequired
   },
 
-  getInitialState:function() {
+  getInitialState() {
     return {imageOverlay: Leaflet.imageOverlay(this.props.url, this.props.bounds, this.props)};
   },
 
-  render:function() {
+  render() {
     if (this.props.map) {
       this.state.imageOverlay.addTo(this.props.map);
     }
-    var children = React.Children.map(this.props.children, function(child)  {
+    var children = React.Children.map(this.props.children, child => {
       return React.addons.cloneWithProps(child, {map: this.props.map});
-    }.bind(this));
-    return React.createElement("noscript", null, children);
+    });
+    return <noscript>{children}</noscript>;
   }
 });

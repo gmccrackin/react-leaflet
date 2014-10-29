@@ -13,20 +13,20 @@ module.exports = React.createClass({
     layers: Type.array.isRequired
   },
 
-  getInitialState:function() {
+  getInitialState() {
     return {featureGroup: Leaflet.featureGroup(this.props.layers)};
   },
 
-  render:function() {
+  render() {
     if (this.props.map) {
       this.state.featureGroup.addTo(this.props.map);
     }
-    var children = React.Children.map(this.props.children, function(child)  {
+    var children = React.Children.map(this.props.children, child => {
       return React.addons.cloneWithProps(child, {
         map: this.props.map,
         layer: this.props.layer
       });
-    }.bind(this));
-    return React.createElement("noscript", null, children);
+    });
+    return <noscript>{children}</noscript>;
   }
 });

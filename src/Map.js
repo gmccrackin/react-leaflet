@@ -27,24 +27,24 @@ var Map = React.createClass({
     maxBounds: latlngListType
   },
 
-  getInitialState:function() {
+  getInitialState() {
     return {id: Map.uid()};
   },
 
-  componentDidMount:function() {
+  componentDidMount() {
     var map = Leaflet.map(this.state.id, this.props);
-    this.setState({map:map});
+    this.setState({map});
     this.bindEvents(this.state._events);
   },
 
-  render:function() {
+  render() {
     var children;
     if (this.state.map) {
-      children = React.Children.map(this.props.children, function(child)  {
+      children = React.Children.map(this.props.children, child => {
         return React.addons.cloneWithProps(child, {map: this.state.map});
-      }.bind(this));
+      });
     }
-    return React.createElement("div", {id: this.state.id}, children);
+    return <div id={this.state.id}>{children}</div>;
   }
 });
 

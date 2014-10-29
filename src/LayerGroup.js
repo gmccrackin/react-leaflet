@@ -5,28 +5,28 @@ var Type = React.PropTypes;
 var eventsMixins = require("./mixins/events");
 
 module.exports = React.createClass({
-  displayName: "FeatureGroup",
+  displayName: "LayerGroup",
 
-  mixins: [eventsMixins("featureGroup")],
+  mixins: [eventsMixins("layerGroup")],
 
   propTypes: {
     layers: Type.array.isRequired
   },
 
-  getInitialState:function() {
-    return {featureGroup: Leaflet.featureGroup(this.props.layers)};
+  getInitialState() {
+    return {layerGroup: Leaflet.layerGroup(this.props.layers)};
   },
 
-  render:function() {
+  render() {
     if (this.props.map) {
-      this.state.featureGroup.addTo(this.props.map);
+      this.state.layerGroup.addTo(this.props.map);
     }
-    var children = React.Children.map(this.props.children, function(child)  {
+    var children = React.Children.map(this.props.children, child => {
       return React.addons.cloneWithProps(child, {
         map: this.props.map,
         layer: this.props.layer
       });
-    }.bind(this));
-    return React.createElement("noscript", null, children);
+    });
+    return <noscript>{children}</noscript>;
   }
 });

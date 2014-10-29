@@ -11,20 +11,20 @@ module.exports = React.createClass({
     url: React.PropTypes.string.isRequired
   },
 
-  getInitialState:function() {
+  getInitialState() {
     return {tileLayer: Leaflet.tileLayer.wms(this.props.url, this.props)};
   },
 
-  render:function() {
+  render() {
     if (this.props.map) {
       this.state.tileLayer.addTo(this.props.map);
     }
-    var children = React.Children.map(this.props.children, function(child)  {
+    var children = React.Children.map(this.props.children, child => {
       return React.addons.cloneWithProps(child, {
         map: this.props.map,
         layer: this.state.tileLayer
       });
-    }.bind(this));
-    return React.createElement("noscript", null, children);
+    });
+    return <noscript>{children}</noscript>;
   }
 });

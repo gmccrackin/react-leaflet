@@ -6,9 +6,9 @@ module.exports = function(elName) {
   return {
     extractEvents: function(props) {
       var re = /onLeaflet(.+)/i;
-      return reduce(props, function(res, cb, ev)  {
+      return reduce(props, (res, cb, ev) => {
         if (re.test(ev)) {
-          var key = ev.replace(re, function(match, p)  {return p.toLowerCase();});
+          var key = ev.replace(re, (match, p) => p.toLowerCase());
           res[ key ] = cb;
         }
         return res;
@@ -23,14 +23,14 @@ module.exports = function(elName) {
       prev = prev || {};
       var diff = clone(prev);
 
-      forEach(prev, function(cb, ev)  {
+      forEach(prev, (cb, ev) => {
         if (!next[ ev ] || cb !== next[ ev ]) {
           delete diff[ ev ];
           el.off(ev, cb);
         }
       });
 
-      forEach(next, function(cb, ev)  {
+      forEach(next, (cb, ev) => {
         if (!prev[ ev ] || cb !== prev[ ev ]) {
           diff[ ev ] = cb;
           el.on(ev, cb);
@@ -67,7 +67,7 @@ module.exports = function(elName) {
       var el = this.state[ elName ];
       if (!el) return;
 
-      forEach(this.state._events, function(cb, ev)  {
+      forEach(this.state._events, (cb, ev) => {
         el.off(ev, cb);
       });
     }

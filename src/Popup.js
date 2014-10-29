@@ -16,17 +16,17 @@ module.exports = React.createClass({
 
   mixins: [eventsMixins("popup")],
 
-  getInitialState:function() {
+  getInitialState() {
     return {popup: Leaflet.popup(this.props, this.props.layer)};
   },
 
-  render:function() {
+  render() {
     if (this.props.children) {
       var content = React.renderToString(this.props.children);
       // Attach to parent component if in supported whitelist
-      var el = find(bindTo, function(component)  {
+      var el = find(bindTo, component => {
         return this.props[ component ];
-      }.bind(this));
+      });
       if (el) {
         el.bindPopup(content);
         return null;

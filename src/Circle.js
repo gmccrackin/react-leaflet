@@ -16,20 +16,20 @@ module.exports = React.createClass({
     radius: Type.number.isRequired
   },
 
-  getInitialState:function() {
+  getInitialState() {
     return {circle: Leaflet.circle(this.props.center, this.props.radius, this.props)};
   },
 
-  render:function() {
+  render() {
     if (this.props.map) {
       this.state.circle.addTo(this.props.map);
     }
-    var children = react.Children.map(this.props.children, function(child)  {
+    var children = react.Children.map(this.props.children, child => {
       return react.addons.cloneWithProps(child, {
         map: this.props.map,
         layer: this.props.layer
       });
-    }.bind(this));
-    return React.createElement("noscript", null, children);
+    });
+    return <noscript>{children}</noscript>;
   }
 });

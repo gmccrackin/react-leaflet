@@ -15,21 +15,21 @@ module.exports = React.createClass({
     polygons: Type.arrayOf(latlngListType).isRequired
   },
 
-  getInitialState:function() {
+  getInitialState() {
     return {multiPolygon: Leaflet.multiPolyline(this.props.polygons, this.props)};
   },
 
-  render:function() {
+  render() {
     if (this.props.map) {
       this.state.multiPolygon.addTo(this.props.map);
     }
-    var children = React.Children.map(this.props.children, function(child)  {
+    var children = React.Children.map(this.props.children, child => {
       return React.addons.cloneWithProps(child, {
         map: this.props.map,
         layer: this.props.layer,
         multiPolygon: this.state.multiPolygon
       });
-    }.bind(this));
-    return React.createElement("noscript", null, children);
+    });
+    return <noscript>{children}</noscript>;
   }
 });

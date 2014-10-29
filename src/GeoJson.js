@@ -13,20 +13,20 @@ module.exports = React.createClass({
     data: Type.object.isRequired
   },
 
-  getInitialState:function() {
+  getInitialState() {
     return {geoJson: Leaflet.geoJson(this.props.data, this.props)};
   },
 
-  render:function() {
+  render() {
     if (this.props.map) {
       this.state.geoJson.addTo(this.props.map);
     }
-    var children = React.Children.map(this.props.children, function(child)  {
+    var children = React.Children.map(this.props.children, child => {
       return React.addons.cloneWithProps(child, {
         map: this.props.map,
         layer: this.props.layer
       });
-    }.bind(this));
-    return React.createElement("noscript", null, children);
+    });
+    return <noscript>{children}</noscript>;
   }
 });

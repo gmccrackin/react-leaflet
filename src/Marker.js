@@ -15,21 +15,21 @@ module.exports = React.createClass({
     position: latlngType.isRequired
   },
 
-  getInitialState:function() {
+  getInitialState() {
     return {marker: Leaflet.marker(this.props.position, this.props)};
   },
 
-  render:function() {
+  render() {
     if (this.props.map) {
       this.state.marker.addTo(this.props.map);
     }
-    var children = React.Children.map(this.props.children, function(child)  {
+    var children = React.Children.map(this.props.children, child => {
       return React.addons.cloneWithProps(child, {
         map: this.props.map,
         layer: this.props.layer,
         marker: this.state.marker
       });
-    }.bind(this));
-    return React.createElement("noscript", null, children);
+    });
+    return <noscript>{children}</noscript>;
   }
 });

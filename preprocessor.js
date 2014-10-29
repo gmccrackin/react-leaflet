@@ -1,10 +1,7 @@
-var coffee = require("coffee-script");
+var ReactTools = require("react-tools");
 
 module.exports = {
-  process: function(src, path) {
-    if (coffee.helpers.isCoffee(path)) {
-      return coffee.compile(src, {"bare": true});
-    }
-    return src;
+  process: function(src) {
+    return ReactTools.transform(src, {harmony: true});
   }
 };

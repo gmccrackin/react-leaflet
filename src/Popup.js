@@ -24,11 +24,11 @@ module.exports = React.createClass({
     if (this.props.children) {
       var content = React.renderToString(this.props.children);
       // Attach to parent component if in supported whitelist
-      var el = find(bindTo, component => {
+      var parent = find(bindTo, component => {
         return this.props[ component ];
       });
-      if (el) {
-        el.bindPopup(content);
+      if (parent) {
+        this.props[ parent ].bindPopup(content);
         return null;
       }
       // Attach to a Map

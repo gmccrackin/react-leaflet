@@ -1,305 +1,262 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var Type, eventsMixins, leaflet, noscript, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var Type = React.PropTypes;
+var eventsMixins = require("./mixins/events");
 
-leaflet = require("leaflet");
-
-Type = react.PropTypes;
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "CanvasTileLayer",
+
   mixins: [eventsMixins("tileLayer")],
-  getInitialState: function() {
-    return {
-      tileLayer: leaflet.tileLayer.canvas(this.props)
-    };
+
+  getInitialState:function() {
+    return {tileLayer: Leaflet.tileLayer.canvas(this.props)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
       this.state.tileLayer.addTo(this.props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map,
-          layer: _this.state.tileLayer
-        });
-      };
-    })(this)));
+    var children = React.Children.map(this.props.children, function(child)  {
+      return React.addons.cloneWithProps(child, {
+        map: this.props.map,
+        layer: this.state.tileLayer
+      });
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"leaflet":"leaflet","react/addons":"react/addons"}],2:[function(require,module,exports){
-var Type, eventsMixins, latlngType, leaflet, noscript, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var Type = React.PropTypes;
+var latlngType = require("./types/latlng");
 
-leaflet = require("leaflet");
+var eventsMixins = require("./mixins/events");
 
-Type = react.PropTypes;
-
-latlngType = require("./types/latlng");
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "Circle",
+
   mixins: [eventsMixins("circle")],
+
   propTypes: {
     center: latlngType.isRequired,
     radius: Type.number.isRequired
   },
-  getInitialState: function() {
-    return {
-      circle: leaflet.circle(this.props.center, this.props.radius, this.props)
-    };
+
+  getInitialState:function() {
+    return {circle: Leaflet.circle(this.props.center, this.props.radius, this.props)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
       this.state.circle.addTo(this.props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map,
-          layer: _this.props.layer
-        });
-      };
-    })(this)));
+    var children = react.Children.map(this.props.children, function(child)  {
+      return react.addons.cloneWithProps(child, {
+        map: this.props.map,
+        layer: this.props.layer
+      });
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"./types/latlng":19,"leaflet":"leaflet","react/addons":"react/addons"}],3:[function(require,module,exports){
-var eventsMixins, latlngType, leaflet, noscript, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var latlngType = require("./types/latlng");
+var eventsMixins = require("./mixins/events");
 
-leaflet = require("leaflet");
-
-latlngType = require("./types/latlng");
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "CircleMarker",
+
   mixins: [eventsMixins("circleMarker")],
+
   propTypes: {
     center: latlngType.isRequired
   },
-  getInitialState: function() {
-    return {
-      circleMarker: leaflet.circleMarker(this.props.center, this.props)
-    };
+
+  getInitialState:function() {
+    return {circleMarker: Leaflet.circleMarker(this.props.center, this.props)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
       this.state.circleMarker.addTo(this.props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map,
-          layer: _this.props.layer
-        });
-      };
-    })(this)));
+    var children = React.Children.map(this.props.children, function(child)  {
+      return React.addons.cloneWithProps(child, {
+        map: this.props.map,
+        layer: this.props.layer
+      });
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"./types/latlng":19,"leaflet":"leaflet","react/addons":"react/addons"}],4:[function(require,module,exports){
-var Type, eventsMixins, leaflet, noscript, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var Type = React.PropTypes;
+var eventsMixins = require("./mixins/events");
 
-leaflet = require("leaflet");
-
-Type = react.PropTypes;
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "FeatureGroup",
+
   mixins: [eventsMixins("featureGroup")],
+
   propTypes: {
     layers: Type.array.isRequired
   },
-  getInitialState: function() {
-    return {
-      featureGroup: leaflet.featureGroup(this.props.layers)
-    };
+
+  getInitialState:function() {
+    return {featureGroup: Leaflet.featureGroup(this.props.layers)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
       this.state.featureGroup.addTo(this.props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map,
-          layer: _this.props.layer
-        });
-      };
-    })(this)));
+    var children = React.Children.map(this.props.children, function(child)  {
+      return React.addons.cloneWithProps(child, {
+        map: this.props.map,
+        layer: this.props.layer
+      });
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"leaflet":"leaflet","react/addons":"react/addons"}],5:[function(require,module,exports){
-var Type, eventsMixins, leaflet, noscript, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var Type = React.PropTypes;
+var eventsMixins = require("./mixins/events");
 
-leaflet = require("leaflet");
-
-Type = react.PropTypes;
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "GeoJson",
+
   mixins: [eventsMixins("geoJson")],
+
   propTypes: {
     data: Type.object.isRequired
   },
-  getInitialState: function() {
-    return {
-      geoJson: leaflet.geoJson(this.props.data, this.props)
-    };
+
+  getInitialState:function() {
+    return {geoJson: Leaflet.geoJson(this.props.data, this.props)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
       this.state.geoJson.addTo(this.props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map,
-          layer: _this.props.layer
-        });
-      };
-    })(this)));
+    var children = React.Children.map(this.props.children, function(child)  {
+      return React.addons.cloneWithProps(child, {
+        map: this.props.map,
+        layer: this.props.layer
+      });
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"leaflet":"leaflet","react/addons":"react/addons"}],6:[function(require,module,exports){
-var Type, eventsMixins, latlngListType, leaflet, noscript, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var Type = React.PropTypes;
+var latlngListType = require("./types/latlngList");
 
-leaflet = require("leaflet");
+var eventsMixins = require("./mixins/events");
 
-Type = react.PropTypes;
-
-latlngListType = require("./types/latlngList");
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "ImageOverlay",
+
   mixins: [eventsMixins("imageOverlay")],
+
   propTypes: {
     url: Type.string.isRequired,
     bounds: latlngListType.isRequired
   },
-  getInitialState: function() {
-    return {
-      imageOverlay: leaflet.imageOverlay(this.props.url, this.props.bounds, this.props)
-    };
+
+  getInitialState:function() {
+    return {imageOverlay: Leaflet.imageOverlay(this.props.url, this.props.bounds, this.props)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
       this.state.imageOverlay.addTo(this.props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map
-        });
-      };
-    })(this)));
+    var children = React.Children.map(this.props.children, function(child)  {
+      return React.addons.cloneWithProps(child, {map: this.props.map});
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"./types/latlngList":20,"leaflet":"leaflet","react/addons":"react/addons"}],7:[function(require,module,exports){
-var Type, eventsMixins, leaflet, noscript, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var Type = React.PropTypes;
+var eventsMixins = require("./mixins/events");
 
-leaflet = require("leaflet");
-
-Type = react.PropTypes;
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "LayerGroup",
+
   mixins: [eventsMixins("layerGroup")],
+
   propTypes: {
     layers: Type.array.isRequired
   },
-  getInitialState: function() {
-    return {
-      layerGroup: leaflet.layerGroup(this.props.layers)
-    };
+
+  getInitialState:function() {
+    return {layerGroup: Leaflet.layerGroup(this.props.layers)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
       this.state.layerGroup.addTo(this.props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map,
-          layer: _this.props.layer
-        });
-      };
-    })(this)));
+    var children = React.Children.map(this.props.children, function(child)  {
+      return React.addons.cloneWithProps(child, {
+        map: this.props.map,
+        layer: this.props.layer
+      });
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"leaflet":"leaflet","react/addons":"react/addons"}],8:[function(require,module,exports){
-var Map, Type, currentId, div, eventsMixins, latlngListType, latlngType, leaflet, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var Type = React.PropTypes;
+var latlngType = require("./types/latlng");
+var latlngListType = require("./types/latlngList");
 
-leaflet = require("leaflet");
+var eventsMixins = require("./mixins/events");
+var currentId = 0;
 
-Type = react.PropTypes;
-
-latlngType = require("./types/latlng");
-
-latlngListType = require("./types/latlngList");
-
-eventsMixins = require("./mixins/events");
-
-div = react.DOM.div;
-
-currentId = 0;
-
-Map = react.createClass({
+var Map = React.createClass({
   displayName: "Map",
+
   mixins: [eventsMixins("map")],
+
   statics: {
     uid: function() {
-      return "map" + (++currentId);
+      return "map" + ++currentId;
     }
   },
+
   propTypes: {
     center: latlngType,
     zoom: Type.number,
@@ -307,526 +264,537 @@ Map = react.createClass({
     maxZoom: Type.number,
     maxBounds: latlngListType
   },
-  getInitialState: function() {
-    return {
-      id: Map.uid()
-    };
+
+  getInitialState:function() {
+    return {id: Map.uid()};
   },
-  componentDidMount: function() {
-    var map;
-    map = leaflet.map(this.state.id, this.props);
+
+  componentDidMount:function() {
+    var map = Leaflet.map(this.state.id, this.props);
+    this.setState({map:map});
     this.bindEvents(this.state._events);
-    return this.setState({
-      map: map
-    });
   },
-  render: function() {
+
+  render:function() {
     var children;
-    if (this.state.map != null) {
-      children = react.Children.map(this.props.children, (function(_this) {
-        return function(child) {
-          return react.addons.cloneWithProps(child, {
-            map: _this.state.map
-          });
-        };
-      })(this));
+    if (this.state.map) {
+      children = React.Children.map(this.props.children, function(child)  {
+        return React.addons.cloneWithProps(child, {map: this.state.map});
+      }.bind(this));
     }
-    return div({
-      id: this.state.id
-    }, children);
+    return React.createElement("div", {id: this.state.id}, children);
   }
 });
 
 module.exports = Map;
 
 },{"./mixins/events":18,"./types/latlng":19,"./types/latlngList":20,"leaflet":"leaflet","react/addons":"react/addons"}],9:[function(require,module,exports){
-var Type, eventsMixins, latlngType, leaflet, noscript, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var Type = React.PropTypes;
+var latlngType = require("./types/latlng");
 
-leaflet = require("leaflet");
+var eventsMixins = require("./mixins/events");
 
-Type = react.PropTypes;
-
-latlngType = require("./types/latlng");
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "Marker",
+
   mixins: [eventsMixins("marker")],
+
   propTypes: {
     position: latlngType.isRequired
   },
-  getInitialState: function() {
-    return {
-      marker: leaflet.marker(this.props.position, this.props)
-    };
+
+  getInitialState:function() {
+    return {marker: Leaflet.marker(this.props.position, this.props)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
       this.state.marker.addTo(this.props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map,
-          layer: _this.props.layer,
-          marker: _this.state.marker
-        });
-      };
-    })(this)));
+    var children = React.Children.map(this.props.children, function(child)  {
+      return React.addons.cloneWithProps(child, {
+        map: this.props.map,
+        layer: this.props.layer,
+        marker: this.state.marker
+      });
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"./types/latlng":19,"leaflet":"leaflet","react/addons":"react/addons"}],10:[function(require,module,exports){
-var Type, eventsMixins, latlngListType, leaflet, noscript, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var Type = React.PropTypes;
+var latlngListType = require("./types/latlngList");
 
-leaflet = require("leaflet");
+var eventsMixins = require("./mixins/events");
 
-Type = react.PropTypes;
-
-latlngListType = require("./types/latlngList");
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "MultiPolygon",
+
   mixins: [eventsMixins("multiPolygon")],
+
   propTypes: {
     polygons: Type.arrayOf(latlngListType).isRequired
   },
-  getInitialState: function() {
-    return {
-      multiPolygon: leaflet.multiPolyline(this.props.polygons, this.props)
-    };
+
+  getInitialState:function() {
+    return {multiPolygon: Leaflet.multiPolyline(this.props.polygons, this.props)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
       this.state.multiPolygon.addTo(this.props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map,
-          layer: _this.props.layer,
-          multiPolygon: _this.state.multiPolygon
-        });
-      };
-    })(this)));
+    var children = React.Children.map(this.props.children, function(child)  {
+      return React.addons.cloneWithProps(child, {
+        map: this.props.map,
+        layer: this.props.layer,
+        multiPolygon: this.state.multiPolygon
+      });
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"./types/latlngList":20,"leaflet":"leaflet","react/addons":"react/addons"}],11:[function(require,module,exports){
-var Type, eventsMixins, latlngListType, leaflet, noscript, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var Type = React.PropTypes;
+var latlngListType = require("./types/latlngList");
 
-leaflet = require("leaflet");
+var eventsMixins = require("./mixins/events");
 
-Type = react.PropTypes;
-
-latlngListType = require("./types/latlngList");
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "MultiPolyline",
+
   mixins: [eventsMixins("multiPolyline")],
+
   propTypes: {
     polylines: Type.arrayOf(latlngListType).isRequired
   },
-  getInitialState: function() {
-    return {
-      multiPolyline: leaflet.multiPolyline(this.props.polylines, this.props)
-    };
+
+  getInitialState:function() {
+    return {multiPolyline: Leaflet.multiPolyline(this.props.polylines, this.props)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
       this.state.multiPolyline.addTo(this.props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map,
-          layer: _this.props.layer,
-          multiPolyline: _this.state.multiPolyline
-        });
-      };
-    })(this)));
+    var children = React.Children.map(this.props.children, function(child)  {
+      return React.addons.cloneWithProps(child, {
+        map: this.props.map,
+        layer: this.props.layer,
+        multiPolyline: this.state.multiPolyline
+      });
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"./types/latlngList":20,"leaflet":"leaflet","react/addons":"react/addons"}],12:[function(require,module,exports){
-var eventsMixins, latlngListType, leaflet, noscript, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var latlngListType = require("./types/latlngList");
+var eventsMixins = require("./mixins/events");
 
-leaflet = require("leaflet");
-
-latlngListType = require("./types/latlngList");
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "Polygon",
+
   mixins: [eventsMixins("polygon")],
+
   propTypes: {
     positions: latlngListType.isRequired
   },
-  getInitialState: function() {
-    return {
-      polygon: leaflet.polygon(this.props.positions, this.props)
-    };
+
+  getInitialState:function() {
+    return {polygon: Leaflet.polygon(this.props.positions, this.props)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
-      this.state.polygon.addTo(this.props.map);
+      this.state.polygon.addTo(props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map,
-          layer: _this.props.layer
-        });
-      };
-    })(this)));
+    var children = React.Children.map(this.props.children, function(child)  {
+      return React.addons.cloneWithProps(child, {
+        map: this.props.map,
+        layer: this.props.layer
+      });
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"./types/latlngList":20,"leaflet":"leaflet","react/addons":"react/addons"}],13:[function(require,module,exports){
-var eventsMixins, latlngListType, leaflet, noscript, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var latlngListType = require("./types/latlngList");
+var eventsMixins = require("./mixins/events");
 
-leaflet = require("leaflet");
-
-latlngListType = require("./types/latlngList");
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "Polyline",
+
   mixins: [eventsMixins("polyline")],
+
   propTypes: {
     positions: latlngListType.isRequired
   },
-  getInitialState: function() {
-    return {
-      polyline: leaflet.polyline(this.props.positions, this.props)
-    };
+
+  getInitialState:function() {
+    return {polyline: Leaflet.polyline(this.props.positions, this.props)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
       this.state.polyline.addTo(this.props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map,
-          layer: _this.props.layer
-        });
-      };
-    })(this)));
+    var children = React.Children.map(this.props.children, function(child)  {
+      return React.addons.cloneWithProps(child, {
+        map: this.props.map,
+        layer: this.props.layer
+      });
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"./types/latlngList":20,"leaflet":"leaflet","react/addons":"react/addons"}],14:[function(require,module,exports){
-var bindTo, eventsMixins, leaflet, react;
+var find = require("lodash-node/modern/collections/find");
 
-react = require("react");
+var React = require("react");
+var Leaflet = require("leaflet");
 
-leaflet = require("leaflet");
+var eventsMixins = require("./mixins/events");
 
-eventsMixins = require("./mixins/events");
+var bindTo = [
+  "marker",
+  "multiPolyline",
+  "multiPolygon",
+];
 
-bindTo = ["marker", "multiPolyline", "multiPolygon"];
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "Popup",
+
   mixins: [eventsMixins("popup")],
-  getInitialState: function() {
-    return {
-      popup: leaflet.popup(this.props, this.props.layer)
-    };
+
+  getInitialState:function() {
+    return {popup: Leaflet.popup(this.props, this.props.layer)};
   },
-  render: function() {
-    var component, content, el, _i, _len;
+
+  render:function() {
     if (this.props.children) {
-      content = react.renderComponentToString(this.props.children);
-      for (_i = 0, _len = bindTo.length; _i < _len; _i++) {
-        component = bindTo[_i];
-        if (!(el = this.props[component])) {
-          continue;
-        }
-        el.bindPopup(content);
+      var content = React.renderToString(this.props.children);
+      // Attach to parent component if in supported whitelist
+      var parent = find(bindTo, function(component)  {
+        return this.props[ component ];
+      }.bind(this));
+      if (parent) {
+        this.props[ parent ].bindPopup(content);
         return null;
       }
+      // Attach to a Map
       this.state.popup.setContent(content);
-      if (this.props.position) {
-        this.state.popup.setLatLng(this.props.position);
-      }
-      if (this.props.map) {
-        this.state.popup.openOn(this.props.map);
-      }
+      if (this.props.position) this.state.popup.setLatLng(this.props.position);
+      if (this.props.map) this.state.popup.openOn(this.props.map);
     }
     return null;
   }
 });
 
-},{"./mixins/events":18,"leaflet":"leaflet","react":"react"}],15:[function(require,module,exports){
-var eventsMixins, latlngListType, leaflet, noscript, react;
+},{"./mixins/events":18,"leaflet":"leaflet","lodash-node/modern/collections/find":21,"react":"react"}],15:[function(require,module,exports){
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var latlngListType = require("./types/latlngList");
+var eventsMixins = require("./mixins/events");
 
-leaflet = require("leaflet");
-
-latlngListType = require("./types/latlngList");
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "Rectangle",
+
   mixins: [eventsMixins("rectangle")],
+
   propTypes: {
     bounds: latlngListType.isRequired
   },
-  getInitialState: function() {
-    return {
-      rectangle: leaflet.rectangle(this.props.bounds, this.props)
-    };
+
+  getInitialState:function() {
+    return {rectangle: Leaflet.rectangle(this.props.bounds, this.props)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
       this.state.rectangle.addTo(this.props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map,
-          layer: _this.props.layer
-        });
-      };
-    })(this)));
+    var children = React.Children.map(this.props.children, function(child)  {
+      return React.addons.cloneWithProps(child, {
+        map: this.props.map,
+        layer: this.props.layer
+      });
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"./types/latlngList":20,"leaflet":"leaflet","react/addons":"react/addons"}],16:[function(require,module,exports){
-var Type, eventsMixins, leaflet, noscript, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
 
-react = require("react/addons");
+var Type = React.PropTypes;
+var eventsMixins = require("./mixins/events");
 
-leaflet = require("leaflet");
-
-Type = react.PropTypes;
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "TileLayer",
+
   mixins: [eventsMixins("tileLayer")],
+
   propTypes: {
     url: Type.string.isRequired
   },
-  getInitialState: function() {
-    return {
-      tileLayer: leaflet.tileLayer(this.props.url, this.props)
-    };
+
+  getInitialState:function() {
+    return {tileLayer: Leaflet.tileLayer(this.props.url, this.props)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
       this.state.tileLayer.addTo(this.props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map,
-          layer: _this.state.tileLayer
-        });
-      };
-    })(this)));
+    var children = React.Children.map(this.props.children, function(child)  {
+      return React.addons.cloneWithProps(child, {
+        map: this.props.map,
+        layer: this.state.tileLayer
+      });
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"leaflet":"leaflet","react/addons":"react/addons"}],17:[function(require,module,exports){
-var Type, eventsMixins, leaflet, noscript, react;
+var React = require("react/addons");
+var Leaflet = require("leaflet");
+var eventsMixins = require("./mixins/events");
 
-react = require("react/addons");
-
-leaflet = require("leaflet");
-
-Type = react.PropTypes;
-
-eventsMixins = require("./mixins/events");
-
-noscript = react.DOM.noscript;
-
-module.exports = react.createClass({
+module.exports = React.createClass({
   displayName: "WMSTileLayer",
+
   mixins: [eventsMixins("tileLayer")],
+
   propTypes: {
-    url: Type.string.isRequired
+    url: React.PropTypes.string.isRequired
   },
-  getInitialState: function() {
-    return {
-      tileLayer: leaflet.tileLayer.wms(this.props.url, this.props)
-    };
+
+  getInitialState:function() {
+    return {tileLayer: Leaflet.tileLayer.wms(this.props.url, this.props)};
   },
-  render: function() {
+
+  render:function() {
     if (this.props.map) {
       this.state.tileLayer.addTo(this.props.map);
     }
-    return noscript(null, react.Children.map(this.props.children, (function(_this) {
-      return function(child) {
-        return react.addons.cloneWithProps(child, {
-          map: _this.props.map,
-          layer: _this.state.tileLayer
-        });
-      };
-    })(this)));
+    var children = React.Children.map(this.props.children, function(child)  {
+      return React.addons.cloneWithProps(child, {
+        map: this.props.map,
+        layer: this.state.tileLayer
+      });
+    }.bind(this));
+    return React.createElement("noscript", null, children);
   }
 });
 
 },{"./mixins/events":18,"leaflet":"leaflet","react/addons":"react/addons"}],18:[function(require,module,exports){
-var clone;
-
-clone = require("lodash-node/modern/objects/clone");
+var clone = require("lodash-node/modern/objects/clone");
+var forEach = require("lodash-node/modern/collections/forEach");
+var reduce = require("lodash-node/modern/collections/reduce");
 
 module.exports = function(elName) {
   return {
     extractEvents: function(props) {
-      var add, cb, ev, re, ret;
-      re = /onLeaflet(.+)/i;
-      ret = {};
-      add = function(ev, cb) {
-        ev = ev.replace(re, function(match, p) {
-          return p.toLowerCase();
-        });
-        return ret[ev] = cb;
-      };
-      for (ev in props) {
-        cb = props[ev];
+      var re = /onLeaflet(.+)/i;
+      return reduce(props, function(res, cb, ev)  {
         if (re.test(ev)) {
-          add(ev, cb);
+          var key = ev.replace(re, function(match, p)  {return p.toLowerCase();});
+          res[ key ] = cb;
         }
-      }
-      return ret;
+        return res;
+      }, {});
     },
+
     bindEvents: function(next, prev) {
-      var add, cb, diff, el, ev, rem;
-      if (next == null) {
-        next = {};
-      }
-      if (prev == null) {
-        prev = {};
-      }
-      if (!(el = this.state[elName])) {
-        return;
-      }
-      diff = clone(prev);
-      add = function(ev, cb) {
-        diff[ev] = cb;
-        return el.on(ev, cb);
-      };
-      rem = function(ev, cb) {
-        delete diff[ev];
-        return el.off(ev, cb);
-      };
-      for (ev in prev) {
-        cb = prev[ev];
-        if (!next[ev] || cb !== next[ev]) {
-          rem(ev, cb);
+      var el = this.state[ elName ];
+      if (!el) return;
+
+      next = next || {};
+      prev = prev || {};
+      var diff = clone(prev);
+
+      forEach(prev, function(cb, ev)  {
+        if (!next[ ev ] || cb !== next[ ev ]) {
+          delete diff[ ev ];
+          el.off(ev, cb);
         }
-      }
-      for (ev in next) {
-        cb = next[ev];
-        if (!prev[ev] || cb !== prev[ev]) {
-          add(ev, cb);
+      });
+
+      forEach(next, function(cb, ev)  {
+        if (!prev[ ev ] || cb !== prev[ ev ]) {
+          diff[ ev ] = cb;
+          el.on(ev, cb);
         }
-      }
+      });
+
       return diff;
     },
+
     fireEvent: function(type, data) {
-      var _ref;
-      return (_ref = this.state[elName]) != null ? _ref.fire(type, data) : void 0;
+      var el = this.state[ elName ];
+      if (el) el.fire(type, data);
     },
+
     componentWillMount: function() {
-      return this.setState({
+      this.setState({
         _events: this.extractEvents(this.props)
       });
     },
+
     componentDidMount: function() {
-      return this.bindEvents(this.state._events);
+      this.bindEvents(this.state._events);
     },
+
     componentWillReceiveProps: function(nextProps) {
-      var bound, next;
-      next = this.extractEvents(nextProps);
-      bound = this.bindEvents(next, this.state._listeners);
-      return this.setState({
+      var next = this.extractEvents(nextProps);
+      var bound = this.bindEvents(next, this.state._listeners);
+      this.setState({
         _events: bound
       });
     },
+
     componentWillUnmount: function() {
-      var cb, el, ev, _ref, _results;
-      if (!(el = this.state[elName])) {
-        return;
-      }
-      _ref = this.state._events;
-      _results = [];
-      for (ev in _ref) {
-        cb = _ref[ev];
-        _results.push(el.off(ev, cb));
-      }
-      return _results;
+      var el = this.state[ elName ];
+      if (!el) return;
+
+      forEach(this.state._events, function(cb, ev)  {
+        el.off(ev, cb);
+      });
     }
-  };
+  }
 };
 
-},{"lodash-node/modern/objects/clone":39}],19:[function(require,module,exports){
-var Type, react;
-
-react = require("react");
-
-Type = react.PropTypes;
+},{"lodash-node/modern/collections/forEach":22,"lodash-node/modern/collections/reduce":23,"lodash-node/modern/objects/clone":43}],19:[function(require,module,exports){
+var React = require("react");
+var Type = React.PropTypes;
 
 module.exports = Type.oneOfType([
-  Type.arrayOf(Type.number), Type.shape({
+  // [Number, Number]
+  Type.arrayOf(Type.number),
+  // {lat: Number, lng: Number}
+  Type.shape({
     lat: Type.number,
     lng: Type.number
-  }), Type.shape({
+  }),
+  // {lat: Number, lon: Number}
+  Type.shape({
     lat: Type.number,
     lon: Type.number
   })
 ]);
 
 },{"react":"react"}],20:[function(require,module,exports){
-var Type, latlng, react;
+var React = require("react");
+var latlng = require("./latlng");
 
-react = require("react");
-
-Type = react.PropTypes;
-
-latlng = require("./latlng");
-
-module.exports = Type.arrayOf(latlng);
+module.exports = React.PropTypes.arrayOf(latlng);
 
 },{"./latlng":19,"react":"react"}],21:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var createCallback = require('../functions/createCallback'),
+    forOwn = require('../objects/forOwn');
+
+/**
+ * Iterates over elements of a collection, returning the first element that
+ * the callback returns truey for. The callback is bound to `thisArg` and
+ * invoked with three arguments; (value, index|key, collection).
+ *
+ * If a property name is provided for `callback` the created "_.pluck" style
+ * callback will return the property value of the given element.
+ *
+ * If an object is provided for `callback` the created "_.where" style callback
+ * will return `true` for elements that have the properties of the given object,
+ * else `false`.
+ *
+ * @static
+ * @memberOf _
+ * @alias detect, findWhere
+ * @category Collections
+ * @param {Array|Object|string} collection The collection to iterate over.
+ * @param {Function|Object|string} [callback=identity] The function called
+ *  per iteration. If a property name or object is provided it will be used
+ *  to create a "_.pluck" or "_.where" style callback, respectively.
+ * @param {*} [thisArg] The `this` binding of `callback`.
+ * @returns {*} Returns the found element, else `undefined`.
+ * @example
+ *
+ * var characters = [
+ *   { 'name': 'barney',  'age': 36, 'blocked': false },
+ *   { 'name': 'fred',    'age': 40, 'blocked': true },
+ *   { 'name': 'pebbles', 'age': 1,  'blocked': false }
+ * ];
+ *
+ * _.find(characters, function(chr) {
+ *   return chr.age < 40;
+ * });
+ * // => { 'name': 'barney', 'age': 36, 'blocked': false }
+ *
+ * // using "_.where" callback shorthand
+ * _.find(characters, { 'age': 1 });
+ * // =>  { 'name': 'pebbles', 'age': 1, 'blocked': false }
+ *
+ * // using "_.pluck" callback shorthand
+ * _.find(characters, 'blocked');
+ * // => { 'name': 'fred', 'age': 40, 'blocked': true }
+ */
+function find(collection, callback, thisArg) {
+  callback = createCallback(callback, thisArg, 3);
+
+  var index = -1,
+      length = collection ? collection.length : 0;
+
+  if (typeof length == 'number') {
+    while (++index < length) {
+      var value = collection[index];
+      if (callback(value, index, collection)) {
+        return value;
+      }
+    }
+  } else {
+    var result;
+    forOwn(collection, function(value, index, collection) {
+      if (callback(value, index, collection)) {
+        result = value;
+        return false;
+      }
+    });
+    return result;
+  }
+}
+
+module.exports = find;
+
+},{"../functions/createCallback":25,"../objects/forOwn":45}],22:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -883,7 +851,76 @@ function forEach(collection, callback, thisArg) {
 
 module.exports = forEach;
 
-},{"../internals/baseCreateCallback":27,"../objects/forOwn":40}],22:[function(require,module,exports){
+},{"../internals/baseCreateCallback":30,"../objects/forOwn":45}],23:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var createCallback = require('../functions/createCallback'),
+    forOwn = require('../objects/forOwn');
+
+/**
+ * Reduces a collection to a value which is the accumulated result of running
+ * each element in the collection through the callback, where each successive
+ * callback execution consumes the return value of the previous execution. If
+ * `accumulator` is not provided the first element of the collection will be
+ * used as the initial `accumulator` value. The callback is bound to `thisArg`
+ * and invoked with four arguments; (accumulator, value, index|key, collection).
+ *
+ * @static
+ * @memberOf _
+ * @alias foldl, inject
+ * @category Collections
+ * @param {Array|Object|string} collection The collection to iterate over.
+ * @param {Function} [callback=identity] The function called per iteration.
+ * @param {*} [accumulator] Initial value of the accumulator.
+ * @param {*} [thisArg] The `this` binding of `callback`.
+ * @returns {*} Returns the accumulated value.
+ * @example
+ *
+ * var sum = _.reduce([1, 2, 3], function(sum, num) {
+ *   return sum + num;
+ * });
+ * // => 6
+ *
+ * var mapped = _.reduce({ 'a': 1, 'b': 2, 'c': 3 }, function(result, num, key) {
+ *   result[key] = num * 3;
+ *   return result;
+ * }, {});
+ * // => { 'a': 3, 'b': 6, 'c': 9 }
+ */
+function reduce(collection, callback, accumulator, thisArg) {
+  if (!collection) return accumulator;
+  var noaccum = arguments.length < 3;
+  callback = createCallback(callback, thisArg, 4);
+
+  var index = -1,
+      length = collection.length;
+
+  if (typeof length == 'number') {
+    if (noaccum) {
+      accumulator = collection[++index];
+    }
+    while (++index < length) {
+      accumulator = callback(accumulator, collection[index], index, collection);
+    }
+  } else {
+    forOwn(collection, function(value, index, collection) {
+      accumulator = noaccum
+        ? (noaccum = false, value)
+        : callback(accumulator, value, index, collection)
+    });
+  }
+  return accumulator;
+}
+
+module.exports = reduce;
+
+},{"../functions/createCallback":25,"../objects/forOwn":45}],24:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -925,7 +962,90 @@ function bind(func, thisArg) {
 
 module.exports = bind;
 
-},{"../internals/createWrapper":29,"../internals/slice":37}],23:[function(require,module,exports){
+},{"../internals/createWrapper":33,"../internals/slice":41}],25:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var baseCreateCallback = require('../internals/baseCreateCallback'),
+    baseIsEqual = require('../internals/baseIsEqual'),
+    isObject = require('../objects/isObject'),
+    keys = require('../objects/keys'),
+    property = require('../utilities/property');
+
+/**
+ * Produces a callback bound to an optional `thisArg`. If `func` is a property
+ * name the created callback will return the property value for a given element.
+ * If `func` is an object the created callback will return `true` for elements
+ * that contain the equivalent object properties, otherwise it will return `false`.
+ *
+ * @static
+ * @memberOf _
+ * @category Utilities
+ * @param {*} [func=identity] The value to convert to a callback.
+ * @param {*} [thisArg] The `this` binding of the created callback.
+ * @param {number} [argCount] The number of arguments the callback accepts.
+ * @returns {Function} Returns a callback function.
+ * @example
+ *
+ * var characters = [
+ *   { 'name': 'barney', 'age': 36 },
+ *   { 'name': 'fred',   'age': 40 }
+ * ];
+ *
+ * // wrap to create custom callback shorthands
+ * _.createCallback = _.wrap(_.createCallback, function(func, callback, thisArg) {
+ *   var match = /^(.+?)__([gl]t)(.+)$/.exec(callback);
+ *   return !match ? func(callback, thisArg) : function(object) {
+ *     return match[2] == 'gt' ? object[match[1]] > match[3] : object[match[1]] < match[3];
+ *   };
+ * });
+ *
+ * _.filter(characters, 'age__gt38');
+ * // => [{ 'name': 'fred', 'age': 40 }]
+ */
+function createCallback(func, thisArg, argCount) {
+  var type = typeof func;
+  if (func == null || type == 'function') {
+    return baseCreateCallback(func, thisArg, argCount);
+  }
+  // handle "_.pluck" style callback shorthands
+  if (type != 'object') {
+    return property(func);
+  }
+  var props = keys(func),
+      key = props[0],
+      a = func[key];
+
+  // handle "_.where" style callback shorthands
+  if (props.length == 1 && a === a && !isObject(a)) {
+    // fast path the common case of providing an object with a single
+    // property containing a primitive value
+    return function(object) {
+      var b = object[key];
+      return a === b && (a !== 0 || (1 / a == 1 / b));
+    };
+  }
+  return function(object) {
+    var length = props.length,
+        result = false;
+
+    while (length--) {
+      if (!(result = baseIsEqual(object[props[length]], func[props[length]], null, true))) {
+        break;
+      }
+    }
+    return result;
+  };
+}
+
+module.exports = createCallback;
+
+},{"../internals/baseCreateCallback":30,"../internals/baseIsEqual":32,"../objects/isObject":48,"../objects/keys":49,"../utilities/property":53}],26:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -940,7 +1060,7 @@ var arrayPool = [];
 
 module.exports = arrayPool;
 
-},{}],24:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1004,7 +1124,7 @@ function baseBind(bindData) {
 
 module.exports = baseBind;
 
-},{"../objects/isObject":43,"./baseCreate":26,"./setBindData":35,"./slice":37}],25:[function(require,module,exports){
+},{"../objects/isObject":48,"./baseCreate":29,"./setBindData":39,"./slice":41}],28:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1158,7 +1278,7 @@ function baseClone(value, isDeep, callback, stackA, stackB) {
 
 module.exports = baseClone;
 
-},{"../collections/forEach":21,"../objects/assign":38,"../objects/forOwn":40,"../objects/isArray":41,"../objects/isObject":43,"./getArray":30,"./releaseArray":34,"./slice":37}],26:[function(require,module,exports){
+},{"../collections/forEach":22,"../objects/assign":42,"../objects/forOwn":45,"../objects/isArray":46,"../objects/isObject":48,"./getArray":34,"./releaseArray":38,"./slice":41}],29:[function(require,module,exports){
 (function (global){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
@@ -1204,7 +1324,7 @@ if (!nativeCreate) {
 module.exports = baseCreate;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../objects/isObject":43,"../utilities/noop":47,"./isNative":31}],27:[function(require,module,exports){
+},{"../objects/isObject":48,"../utilities/noop":52,"./isNative":35}],30:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1286,7 +1406,7 @@ function baseCreateCallback(func, thisArg, argCount) {
 
 module.exports = baseCreateCallback;
 
-},{"../functions/bind":22,"../support":45,"../utilities/identity":46,"./setBindData":35}],28:[function(require,module,exports){
+},{"../functions/bind":24,"../support":50,"../utilities/identity":51,"./setBindData":39}],31:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1366,7 +1486,218 @@ function baseCreateWrapper(bindData) {
 
 module.exports = baseCreateWrapper;
 
-},{"../objects/isObject":43,"./baseCreate":26,"./setBindData":35,"./slice":37}],29:[function(require,module,exports){
+},{"../objects/isObject":48,"./baseCreate":29,"./setBindData":39,"./slice":41}],32:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var forIn = require('../objects/forIn'),
+    getArray = require('./getArray'),
+    isFunction = require('../objects/isFunction'),
+    objectTypes = require('./objectTypes'),
+    releaseArray = require('./releaseArray');
+
+/** `Object#toString` result shortcuts */
+var argsClass = '[object Arguments]',
+    arrayClass = '[object Array]',
+    boolClass = '[object Boolean]',
+    dateClass = '[object Date]',
+    numberClass = '[object Number]',
+    objectClass = '[object Object]',
+    regexpClass = '[object RegExp]',
+    stringClass = '[object String]';
+
+/** Used for native method references */
+var objectProto = Object.prototype;
+
+/** Used to resolve the internal [[Class]] of values */
+var toString = objectProto.toString;
+
+/** Native method shortcuts */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * The base implementation of `_.isEqual`, without support for `thisArg` binding,
+ * that allows partial "_.where" style comparisons.
+ *
+ * @private
+ * @param {*} a The value to compare.
+ * @param {*} b The other value to compare.
+ * @param {Function} [callback] The function to customize comparing values.
+ * @param {Function} [isWhere=false] A flag to indicate performing partial comparisons.
+ * @param {Array} [stackA=[]] Tracks traversed `a` objects.
+ * @param {Array} [stackB=[]] Tracks traversed `b` objects.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ */
+function baseIsEqual(a, b, callback, isWhere, stackA, stackB) {
+  // used to indicate that when comparing objects, `a` has at least the properties of `b`
+  if (callback) {
+    var result = callback(a, b);
+    if (typeof result != 'undefined') {
+      return !!result;
+    }
+  }
+  // exit early for identical values
+  if (a === b) {
+    // treat `+0` vs. `-0` as not equal
+    return a !== 0 || (1 / a == 1 / b);
+  }
+  var type = typeof a,
+      otherType = typeof b;
+
+  // exit early for unlike primitive values
+  if (a === a &&
+      !(a && objectTypes[type]) &&
+      !(b && objectTypes[otherType])) {
+    return false;
+  }
+  // exit early for `null` and `undefined` avoiding ES3's Function#call behavior
+  // http://es5.github.io/#x15.3.4.4
+  if (a == null || b == null) {
+    return a === b;
+  }
+  // compare [[Class]] names
+  var className = toString.call(a),
+      otherClass = toString.call(b);
+
+  if (className == argsClass) {
+    className = objectClass;
+  }
+  if (otherClass == argsClass) {
+    otherClass = objectClass;
+  }
+  if (className != otherClass) {
+    return false;
+  }
+  switch (className) {
+    case boolClass:
+    case dateClass:
+      // coerce dates and booleans to numbers, dates to milliseconds and booleans
+      // to `1` or `0` treating invalid dates coerced to `NaN` as not equal
+      return +a == +b;
+
+    case numberClass:
+      // treat `NaN` vs. `NaN` as equal
+      return (a != +a)
+        ? b != +b
+        // but treat `+0` vs. `-0` as not equal
+        : (a == 0 ? (1 / a == 1 / b) : a == +b);
+
+    case regexpClass:
+    case stringClass:
+      // coerce regexes to strings (http://es5.github.io/#x15.10.6.4)
+      // treat string primitives and their corresponding object instances as equal
+      return a == String(b);
+  }
+  var isArr = className == arrayClass;
+  if (!isArr) {
+    // unwrap any `lodash` wrapped values
+    var aWrapped = hasOwnProperty.call(a, '__wrapped__'),
+        bWrapped = hasOwnProperty.call(b, '__wrapped__');
+
+    if (aWrapped || bWrapped) {
+      return baseIsEqual(aWrapped ? a.__wrapped__ : a, bWrapped ? b.__wrapped__ : b, callback, isWhere, stackA, stackB);
+    }
+    // exit for functions and DOM nodes
+    if (className != objectClass) {
+      return false;
+    }
+    // in older versions of Opera, `arguments` objects have `Array` constructors
+    var ctorA = a.constructor,
+        ctorB = b.constructor;
+
+    // non `Object` object instances with different constructors are not equal
+    if (ctorA != ctorB &&
+          !(isFunction(ctorA) && ctorA instanceof ctorA && isFunction(ctorB) && ctorB instanceof ctorB) &&
+          ('constructor' in a && 'constructor' in b)
+        ) {
+      return false;
+    }
+  }
+  // assume cyclic structures are equal
+  // the algorithm for detecting cyclic structures is adapted from ES 5.1
+  // section 15.12.3, abstract operation `JO` (http://es5.github.io/#x15.12.3)
+  var initedStack = !stackA;
+  stackA || (stackA = getArray());
+  stackB || (stackB = getArray());
+
+  var length = stackA.length;
+  while (length--) {
+    if (stackA[length] == a) {
+      return stackB[length] == b;
+    }
+  }
+  var size = 0;
+  result = true;
+
+  // add `a` and `b` to the stack of traversed objects
+  stackA.push(a);
+  stackB.push(b);
+
+  // recursively compare objects and arrays (susceptible to call stack limits)
+  if (isArr) {
+    // compare lengths to determine if a deep comparison is necessary
+    length = a.length;
+    size = b.length;
+    result = size == length;
+
+    if (result || isWhere) {
+      // deep compare the contents, ignoring non-numeric properties
+      while (size--) {
+        var index = length,
+            value = b[size];
+
+        if (isWhere) {
+          while (index--) {
+            if ((result = baseIsEqual(a[index], value, callback, isWhere, stackA, stackB))) {
+              break;
+            }
+          }
+        } else if (!(result = baseIsEqual(a[size], value, callback, isWhere, stackA, stackB))) {
+          break;
+        }
+      }
+    }
+  }
+  else {
+    // deep compare objects using `forIn`, instead of `forOwn`, to avoid `Object.keys`
+    // which, in this case, is more costly
+    forIn(b, function(value, key, b) {
+      if (hasOwnProperty.call(b, key)) {
+        // count the number of properties.
+        size++;
+        // deep compare each property value.
+        return (result = hasOwnProperty.call(a, key) && baseIsEqual(a[key], value, callback, isWhere, stackA, stackB));
+      }
+    });
+
+    if (result && !isWhere) {
+      // ensure both objects have the same number of properties
+      forIn(a, function(value, key, a) {
+        if (hasOwnProperty.call(a, key)) {
+          // `size` will be `-1` if `a` has more properties than `b`
+          return (result = --size > -1);
+        }
+      });
+    }
+  }
+  stackA.pop();
+  stackB.pop();
+
+  if (initedStack) {
+    releaseArray(stackA);
+    releaseArray(stackB);
+  }
+  return result;
+}
+
+module.exports = baseIsEqual;
+
+},{"../objects/forIn":44,"../objects/isFunction":47,"./getArray":34,"./objectTypes":37,"./releaseArray":38}],33:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1474,7 +1805,7 @@ function createWrapper(func, bitmask, partialArgs, partialRightArgs, thisArg, ar
 
 module.exports = createWrapper;
 
-},{"../objects/isFunction":42,"./baseBind":24,"./baseCreateWrapper":28,"./slice":37}],30:[function(require,module,exports){
+},{"../objects/isFunction":47,"./baseBind":27,"./baseCreateWrapper":31,"./slice":41}],34:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1497,7 +1828,7 @@ function getArray() {
 
 module.exports = getArray;
 
-},{"./arrayPool":23}],31:[function(require,module,exports){
+},{"./arrayPool":26}],35:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1533,7 +1864,7 @@ function isNative(value) {
 
 module.exports = isNative;
 
-},{}],32:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1548,7 +1879,7 @@ var maxPoolSize = 40;
 
 module.exports = maxPoolSize;
 
-},{}],33:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1570,7 +1901,7 @@ var objectTypes = {
 
 module.exports = objectTypes;
 
-},{}],34:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1597,7 +1928,7 @@ function releaseArray(array) {
 
 module.exports = releaseArray;
 
-},{"./arrayPool":23,"./maxPoolSize":32}],35:[function(require,module,exports){
+},{"./arrayPool":26,"./maxPoolSize":36}],39:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1642,7 +1973,7 @@ var setBindData = !defineProperty ? noop : function(func, value) {
 
 module.exports = setBindData;
 
-},{"../utilities/noop":47,"./isNative":31}],36:[function(require,module,exports){
+},{"../utilities/noop":52,"./isNative":35}],40:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1682,7 +2013,7 @@ var shimKeys = function(object) {
 
 module.exports = shimKeys;
 
-},{"./objectTypes":33}],37:[function(require,module,exports){
+},{"./objectTypes":37}],41:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1722,7 +2053,7 @@ function slice(array, start, end) {
 
 module.exports = slice;
 
-},{}],38:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1794,7 +2125,7 @@ var assign = function(object, source, guard) {
 
 module.exports = assign;
 
-},{"../internals/baseCreateCallback":27,"../internals/objectTypes":33,"./keys":44}],39:[function(require,module,exports){
+},{"../internals/baseCreateCallback":30,"../internals/objectTypes":37,"./keys":49}],43:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1859,7 +2190,63 @@ function clone(value, isDeep, callback, thisArg) {
 
 module.exports = clone;
 
-},{"../internals/baseClone":25,"../internals/baseCreateCallback":27}],40:[function(require,module,exports){
+},{"../internals/baseClone":28,"../internals/baseCreateCallback":30}],44:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var baseCreateCallback = require('../internals/baseCreateCallback'),
+    objectTypes = require('../internals/objectTypes');
+
+/**
+ * Iterates over own and inherited enumerable properties of an object,
+ * executing the callback for each property. The callback is bound to `thisArg`
+ * and invoked with three arguments; (value, key, object). Callbacks may exit
+ * iteration early by explicitly returning `false`.
+ *
+ * @static
+ * @memberOf _
+ * @type Function
+ * @category Objects
+ * @param {Object} object The object to iterate over.
+ * @param {Function} [callback=identity] The function called per iteration.
+ * @param {*} [thisArg] The `this` binding of `callback`.
+ * @returns {Object} Returns `object`.
+ * @example
+ *
+ * function Shape() {
+ *   this.x = 0;
+ *   this.y = 0;
+ * }
+ *
+ * Shape.prototype.move = function(x, y) {
+ *   this.x += x;
+ *   this.y += y;
+ * };
+ *
+ * _.forIn(new Shape, function(value, key) {
+ *   console.log(key);
+ * });
+ * // => logs 'x', 'y', and 'move' (property order is not guaranteed across environments)
+ */
+var forIn = function(collection, callback, thisArg) {
+  var index, iterable = collection, result = iterable;
+  if (!iterable) return result;
+  if (!objectTypes[typeof iterable]) return result;
+  callback = callback && typeof thisArg == 'undefined' ? callback : baseCreateCallback(callback, thisArg, 3);
+    for (index in iterable) {
+      if (callback(iterable[index], index, collection) === false) return result;
+    }
+  return result
+};
+
+module.exports = forIn;
+
+},{"../internals/baseCreateCallback":30,"../internals/objectTypes":37}],45:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1911,7 +2298,7 @@ var forOwn = function(collection, callback, thisArg) {
 
 module.exports = forOwn;
 
-},{"../internals/baseCreateCallback":27,"../internals/objectTypes":33,"./keys":44}],41:[function(require,module,exports){
+},{"../internals/baseCreateCallback":30,"../internals/objectTypes":37,"./keys":49}],46:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1958,7 +2345,7 @@ var isArray = nativeIsArray || function(value) {
 
 module.exports = isArray;
 
-},{"../internals/isNative":31}],42:[function(require,module,exports){
+},{"../internals/isNative":35}],47:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -1987,7 +2374,7 @@ function isFunction(value) {
 
 module.exports = isFunction;
 
-},{}],43:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -2028,7 +2415,7 @@ function isObject(value) {
 
 module.exports = isObject;
 
-},{"../internals/objectTypes":33}],44:[function(require,module,exports){
+},{"../internals/objectTypes":37}],49:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -2066,7 +2453,7 @@ var keys = !nativeKeys ? shimKeys : function(object) {
 
 module.exports = keys;
 
-},{"../internals/isNative":31,"../internals/shimKeys":36,"./isObject":43}],45:[function(require,module,exports){
+},{"../internals/isNative":35,"../internals/shimKeys":40,"./isObject":48}],50:[function(require,module,exports){
 (function (global){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
@@ -2110,7 +2497,7 @@ support.funcNames = typeof Function.name == 'string';
 module.exports = support;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./internals/isNative":31}],46:[function(require,module,exports){
+},{"./internals/isNative":35}],51:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -2140,7 +2527,7 @@ function identity(value) {
 
 module.exports = identity;
 
-},{}],47:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -2168,13 +2555,53 @@ function noop() {
 
 module.exports = noop;
 
+},{}],53:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+
+/**
+ * Creates a "_.pluck" style function, which returns the `key` value of a
+ * given object.
+ *
+ * @static
+ * @memberOf _
+ * @category Utilities
+ * @param {string} key The name of the property to retrieve.
+ * @returns {Function} Returns the new function.
+ * @example
+ *
+ * var characters = [
+ *   { 'name': 'fred',   'age': 40 },
+ *   { 'name': 'barney', 'age': 36 }
+ * ];
+ *
+ * var getName = _.property('name');
+ *
+ * _.map(characters, getName);
+ * // => ['barney', 'fred']
+ *
+ * _.sortBy(characters, getName);
+ * // => [{ 'name': 'barney', 'age': 36 }, { 'name': 'fred',   'age': 40 }]
+ */
+function property(key) {
+  return function(object) {
+    return object[key];
+  };
+}
+
+module.exports = property;
+
 },{}],"react-leaflet":[function(require,module,exports){
-var leaflet, setIconDefaultImagePath;
+var Leaflet = require("leaflet");
 
-leaflet = require("leaflet");
-
-setIconDefaultImagePath = function(path) {
-  return leaflet.Icon.Default.imagePath = path;
+var setIconDefaultImagePath = function(path) {
+  Leaflet.Icon.Default.imagePath = path;
 };
 
 setIconDefaultImagePath("//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/images");

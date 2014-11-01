@@ -10,8 +10,8 @@ describe("Marker", function() {
       {Map, Marker, TileLayer} = require("../");
 
     document.body.innerHTML = '<div id="test"></div>';
-    var position = [0, 0];
-    var mapComponent = (
+    var position = [0, 0],
+      mapComponent = (
         <Map center={position} zoom={10}>
           <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
           <Marker position={position} />

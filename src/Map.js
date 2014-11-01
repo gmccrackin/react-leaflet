@@ -21,14 +21,17 @@ var Map = React.createClass({
 
   propTypes: {
     center: latlngType,
-    zoom: Type.number,
-    minZoom: Type.number,
+    id: Type.string,
+    maxBounds: latlngListType,
     maxZoom: Type.number,
-    maxBounds: latlngListType
+    minZoom: Type.number,
+    zoom: Type.number
   },
 
   getInitialState() {
-    return {id: Map.uid()};
+    return {
+      id: this.props.id || Map.uid()
+    };
   },
 
   componentDidMount() {
@@ -38,7 +41,7 @@ var Map = React.createClass({
   },
 
   render() {
-    var children;
+    var children = null;
     if (this.state.map) {
       children = React.Children.map(this.props.children, child => {
         return React.addons.cloneWithProps(child, {map: this.state.map});

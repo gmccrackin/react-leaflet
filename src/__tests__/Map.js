@@ -6,7 +6,7 @@ describe("Map", function() {
 
   beforeEach(function() {
     React = require("react");
-    Map = require("../Map");
+    Map = React.createFactory(require("../Map"));
   });
 
   it("should initialize the map in the rendered container", function() {
